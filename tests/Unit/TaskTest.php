@@ -14,10 +14,10 @@ class TaskTest extends TestCase
         $this->assertTrue(true);
     }
 
-    // when testing API endpoints, we are inherently 
+    // when testing API endpoints, we are inherently
     // testing a larger piece of functionality that involves
     // HTTP request handling, database interactions, and
     // authentication/authorization. This kind of testing is typically
     // categorized as integration or feature testing.
-    // thats why i have not written any test here. 
+    // thats why i have not written any test here.
 }

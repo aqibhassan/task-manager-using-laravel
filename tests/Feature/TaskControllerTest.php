@@ -12,6 +12,18 @@ class TaskControllerTest extends TestCase
 {
     use WithFaker;
 
+    /**
+     * Tests if a user can successfully create a task through the API endpoint.
+     * 
+     * Procedure:
+     * 1. Creates a new user using the User factory.
+     * 2. Generates an authentication token for the created user.
+     * 3. Prepares mock task data using Faker.
+     * 4. Sends a POST request to the 'api/v1/create-task' endpoint using the generated token.
+     * 5. Asserts that the API response status is 201 (indicating successful creation).
+     * 6. Asserts that the task has been successfully added to the database.
+     * 7. Cleanup: Deletes the created task and user from the database.
+     */
     public function test_user_can_create_task()
     {
         $user = User::factory()->create();
@@ -43,6 +55,20 @@ class TaskControllerTest extends TestCase
         }
     }
 
+    /**
+     * Tests if a user can successfully fetch a specific task through the API endpoint.
+     * 
+     * Procedure:
+     * 1. Creates a new user using the User factory.
+     * 2. Generates an authentication token for the created user.
+     * 3. Creates a new task using the Task factory.
+     * 4. Constructs the API endpoint path using the created task's ID.
+     * 5. Sends a GET request to the constructed endpoint using the generated token.
+     * 6. Asserts that the API response status is 200 (indicating successful retrieval).
+     * 7. Asserts that the response contains the correct task details.
+     * 8. Cleanup: Deletes the created task and user from the database.
+     */
+
     public function test_user_can_fetch_specific_task()
     {
         $user = User::factory()->create();
@@ -73,7 +99,20 @@ class TaskControllerTest extends TestCase
             $lastUser->delete();
         }
     }
-
+    /**
+     * Tests if a user can successfully update a specific task through the API endpoint.
+     * 
+     * Procedure:
+     * 1. Creates a new user using the User factory.
+     * 2. Generates an authentication token for the created user.
+     * 3. Creates a new task using the Task factory.
+     * 4. Constructs the API endpoint path using the created task's ID.
+     * 5. Prepares updated task data.
+     * 6. Sends a PUT request to the constructed endpoint using the generated token and updated data.
+     * 7. Asserts that the API response status is 200 (indicating successful update).
+     * 8. Asserts that the task in the database has been updated with the new data.
+     * 9. Cleanup: Deletes the updated task and user from the database.
+     */
     public function test_user_can_update_task()
     {
         $user = User::factory()->create();
@@ -108,6 +147,19 @@ class TaskControllerTest extends TestCase
         }
     }
 
+    /**
+     * Tests if a user can successfully delete a specific task through the API endpoint.
+     * 
+     * Procedure:
+     * 1. Creates a new user using the User factory.
+     * 2. Generates an authentication token for the created user.
+     * 3. Creates a new task using the Task factory.
+     * 4. Constructs the API endpoint path using the created task's ID.
+     * 5. Sends a DELETE request to the constructed endpoint using the generated token.
+     * 6. Asserts that the API response status is 204 (indicating successful deletion).
+     * 7. Asserts that the task has been successfully removed from the database.
+     * 8. Cleanup: Deletes the created user from the database.
+     */
     public function test_user_can_delete_task()
     {
         $user = User::factory()->create();
