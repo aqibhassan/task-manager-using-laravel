@@ -36,6 +36,5 @@ Route::group(['namespace' => 'Api', 'prefix' => 'v1'], function () {
 
         // Delete a task by ID
         Route::delete('/delete-task/{id}', [TaskController::class, 'destroy']);
-        // ... other routes that require authentication ...
     });
 });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->date('due_date')->nullable();
+            $table->date('due_date');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->enum('status', ['new', 'in_progress', 'on_hold', 'completed', 'review'])->default('new');
             $table->boolean('completed')->default(false);

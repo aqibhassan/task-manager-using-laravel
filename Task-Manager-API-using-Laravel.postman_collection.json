@@ -1,0 +1,287 @@
+{
+	"info": {
+		"_postman_id": "c78f3bd7-2cc7-4fc5-9f1e-32c9ffa54d04",
+		"name": "Task-Manager-API-using-Laravel",
+		"description": "## **Tasks API Collection Overview**\n\n### **Base URL**:\n\n`http://your-domain/v1`\n\n### **Headers**:\n\n- `Accept: application/json`\n- `Authorization: Bearer YOUR_ACCESS_TOKEN` (Replace `YOUR_ACCESS_TOKEN` with the token you receive after logging in using Passport or your chosen authentication method.)\n    \n\n### **Endpoints**:\n\n1. **Login**\n    \n    - **Method**: POST\n    - **Endpoint**: `/login`\n    - **Description**: Authenticate a user and retrieve an access token.\n    - **Body** (example):\n        \n        - `{ \"email\": \"demouser@gmail.com\", \"password\": \"12345678\"}`\n            \n2. **Logout**\n    \n    - **Method**: POST\n        \n    - **Endpoint**: `/logout`\n        \n    - **Headers**:\n        \n        - `Authorization: Bearer YOUR_ACCESS_TOKEN`\n            \n    - **Description**: Invalidate the current access token, logging the user out.\n        \n3. **Fetch All Tasks**\n    - **Method**: GET\n    - **Endpoint**: `/`get-all-tasks\n    - **Description**: Retrieves all tasks for the authenticated user.\n4. **Create a New Task**\n    - **Method**: POST\n    - **Endpoint**: `/`create-task\n    - **Description**: Creates a new task.\n    - **Body** (example):\n        - `{ \"title\": \"Sample Task\", \"description\": \"Description for the sample task.\", \"due_date\": \"2023-12-31\", \"priority\": \"medium\", \"status\": \"new\", \"completed\": false, \"notes\": \"Additional notes about the task.\" }`\n5. **Fetch a Specific Task**\n    - **Method**: GET\n    - **Endpoint**: `/`get-task`/{task_id}` (Replace `{task_id}` with the ID of the desired task.)\n    - **Description**: Retrieves a specific task based on its ID.\n6. **Update a Task**\n    - **Method**: PUT\n    - **Endpoint**: `/`update-task`/{task_id}` (Replace `{task_id}` with the ID of the task you want to update.)\n    - **Description**: Updates a specific task's details.\n    - **Body** (example for updating title):\n        - `{ \"title\": \"Updated Task Title\" }`\n7. **Delete a Task**\n    - **Method**: DELETE\n    - **Endpoint**: `/`delete-task`/{task_id}` (Replace `{task_id}` with the ID of the task you want to delete.)\n    - **Description**: Deletes a specific task based on its ID.\n\n**Note**: Ensure you replace `http://your-domain` with your actual domain or localhost address and port. Always include the `Authorization` header with a valid access token for routes that are protected by the `auth:api` middleware.\n\n---\n\nYou can add this overview to the description of your Postman collection to provide clear instructions to anyone using the collection, whether it's other developers, testers, or clients.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30377961"
+	},
+	"item": [
+		{
+			"name": "{{base_url}}/api/login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "email",
+						"value": "Aqibhassan@gmail.com",
+						"type": "text"
+					},
+					{
+						"key": "password",
+						"value": "aqibhassan",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"demouser@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/login",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2U5MWFkMmFhNTZjMjdmMzQ2MzFkMTljNTczYTBkODg0MjJiNDQ1MzI3NTM5ODIyNjg1OTJiY2ZkZTY3Mjk1NjNhNzAzMWRiYWZiNmZmNDciLCJpYXQiOjE2OTY5MDU4OTIuNzc3MzExLCJuYmYiOjE2OTY5MDU4OTIuNzc3MzEyLCJleHAiOjE3Mjg1MjgyOTIuNzczODE1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.kcbHwkhzFiONOUeRWFTsxIkzctvrEQUN-gt9vZZGRhSKP8JcYOIxnJ1v6artXvZM6lQ04powXfdvgnoVmY-Gg7GFDGeOcsMebQ-kR0ZVsp7J7oW2h12GvvVmN6xzE0uecZfGTTcS8VhhPAQdCMdnIv-F2zb-5VLxXurWEhFHKhxQ8MC-vHO1OepJ9_XwqslAsOJa-NFeTzTQjNyX_O_T-vTeDZpxXR_IMpeExDkqWKC5SKaXOEBFDZlejDd11yNoSwtgLuQcB7yMVQ83L7oXZvHKh9KW9frkAeeOY3-mUrWvsR0EaaZcRPFwpolHxAMw0rlPu2nl_-mV-6gBlhW0fgn_etNcEu4xpUVl7nRAWxr9Q4DO2ycBLS9B4b-n66UMNaNKCZnb9FLZiM82uz4dwtjZPHiUPQMwJZD-LBOoJctfTIC_NVfn_7SdVVYYnu5LITHwr34pqkRq_Rvx4W6xLY9GG2bxHM0lkE-br53M2anD2_JYvdKddyqr3mt9-eexDuiFxczhHsdXze8x6EOnuoPE0V3E3H9G3KHJTqJKNsY-E_GfxR52k4C9p4af4zvhI6tOzeUveA84HD7giM4gFUzUW2lW3UFbsxO2m_2sfRW7x3O9RwpafQ98FnmHYSEKHh4Pt2uSnpwNqnfRAYCmgD636Wepii8tsHtwffn0jik",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/logout-user",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"logout-user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/get-all-tasks",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2U5MWFkMmFhNTZjMjdmMzQ2MzFkMTljNTczYTBkODg0MjJiNDQ1MzI3NTM5ODIyNjg1OTJiY2ZkZTY3Mjk1NjNhNzAzMWRiYWZiNmZmNDciLCJpYXQiOjE2OTY5MDU4OTIuNzc3MzExLCJuYmYiOjE2OTY5MDU4OTIuNzc3MzEyLCJleHAiOjE3Mjg1MjgyOTIuNzczODE1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.kcbHwkhzFiONOUeRWFTsxIkzctvrEQUN-gt9vZZGRhSKP8JcYOIxnJ1v6artXvZM6lQ04powXfdvgnoVmY-Gg7GFDGeOcsMebQ-kR0ZVsp7J7oW2h12GvvVmN6xzE0uecZfGTTcS8VhhPAQdCMdnIv-F2zb-5VLxXurWEhFHKhxQ8MC-vHO1OepJ9_XwqslAsOJa-NFeTzTQjNyX_O_T-vTeDZpxXR_IMpeExDkqWKC5SKaXOEBFDZlejDd11yNoSwtgLuQcB7yMVQ83L7oXZvHKh9KW9frkAeeOY3-mUrWvsR0EaaZcRPFwpolHxAMw0rlPu2nl_-mV-6gBlhW0fgn_etNcEu4xpUVl7nRAWxr9Q4DO2ycBLS9B4b-n66UMNaNKCZnb9FLZiM82uz4dwtjZPHiUPQMwJZD-LBOoJctfTIC_NVfn_7SdVVYYnu5LITHwr34pqkRq_Rvx4W6xLY9GG2bxHM0lkE-br53M2anD2_JYvdKddyqr3mt9-eexDuiFxczhHsdXze8x6EOnuoPE0V3E3H9G3KHJTqJKNsY-E_GfxR52k4C9p4af4zvhI6tOzeUveA84HD7giM4gFUzUW2lW3UFbsxO2m_2sfRW7x3O9RwpafQ98FnmHYSEKHh4Pt2uSnpwNqnfRAYCmgD636Wepii8tsHtwffn0jik",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/get-all-tasks",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"get-all-tasks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/get-task/2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2U5MWFkMmFhNTZjMjdmMzQ2MzFkMTljNTczYTBkODg0MjJiNDQ1MzI3NTM5ODIyNjg1OTJiY2ZkZTY3Mjk1NjNhNzAzMWRiYWZiNmZmNDciLCJpYXQiOjE2OTY5MDU4OTIuNzc3MzExLCJuYmYiOjE2OTY5MDU4OTIuNzc3MzEyLCJleHAiOjE3Mjg1MjgyOTIuNzczODE1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.kcbHwkhzFiONOUeRWFTsxIkzctvrEQUN-gt9vZZGRhSKP8JcYOIxnJ1v6artXvZM6lQ04powXfdvgnoVmY-Gg7GFDGeOcsMebQ-kR0ZVsp7J7oW2h12GvvVmN6xzE0uecZfGTTcS8VhhPAQdCMdnIv-F2zb-5VLxXurWEhFHKhxQ8MC-vHO1OepJ9_XwqslAsOJa-NFeTzTQjNyX_O_T-vTeDZpxXR_IMpeExDkqWKC5SKaXOEBFDZlejDd11yNoSwtgLuQcB7yMVQ83L7oXZvHKh9KW9frkAeeOY3-mUrWvsR0EaaZcRPFwpolHxAMw0rlPu2nl_-mV-6gBlhW0fgn_etNcEu4xpUVl7nRAWxr9Q4DO2ycBLS9B4b-n66UMNaNKCZnb9FLZiM82uz4dwtjZPHiUPQMwJZD-LBOoJctfTIC_NVfn_7SdVVYYnu5LITHwr34pqkRq_Rvx4W6xLY9GG2bxHM0lkE-br53M2anD2_JYvdKddyqr3mt9-eexDuiFxczhHsdXze8x6EOnuoPE0V3E3H9G3KHJTqJKNsY-E_GfxR52k4C9p4af4zvhI6tOzeUveA84HD7giM4gFUzUW2lW3UFbsxO2m_2sfRW7x3O9RwpafQ98FnmHYSEKHh4Pt2uSnpwNqnfRAYCmgD636Wepii8tsHtwffn0jik",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/get-task/2",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"get-task",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/delete-task/2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2U5MWFkMmFhNTZjMjdmMzQ2MzFkMTljNTczYTBkODg0MjJiNDQ1MzI3NTM5ODIyNjg1OTJiY2ZkZTY3Mjk1NjNhNzAzMWRiYWZiNmZmNDciLCJpYXQiOjE2OTY5MDU4OTIuNzc3MzExLCJuYmYiOjE2OTY5MDU4OTIuNzc3MzEyLCJleHAiOjE3Mjg1MjgyOTIuNzczODE1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.kcbHwkhzFiONOUeRWFTsxIkzctvrEQUN-gt9vZZGRhSKP8JcYOIxnJ1v6artXvZM6lQ04powXfdvgnoVmY-Gg7GFDGeOcsMebQ-kR0ZVsp7J7oW2h12GvvVmN6xzE0uecZfGTTcS8VhhPAQdCMdnIv-F2zb-5VLxXurWEhFHKhxQ8MC-vHO1OepJ9_XwqslAsOJa-NFeTzTQjNyX_O_T-vTeDZpxXR_IMpeExDkqWKC5SKaXOEBFDZlejDd11yNoSwtgLuQcB7yMVQ83L7oXZvHKh9KW9frkAeeOY3-mUrWvsR0EaaZcRPFwpolHxAMw0rlPu2nl_-mV-6gBlhW0fgn_etNcEu4xpUVl7nRAWxr9Q4DO2ycBLS9B4b-n66UMNaNKCZnb9FLZiM82uz4dwtjZPHiUPQMwJZD-LBOoJctfTIC_NVfn_7SdVVYYnu5LITHwr34pqkRq_Rvx4W6xLY9GG2bxHM0lkE-br53M2anD2_JYvdKddyqr3mt9-eexDuiFxczhHsdXze8x6EOnuoPE0V3E3H9G3KHJTqJKNsY-E_GfxR52k4C9p4af4zvhI6tOzeUveA84HD7giM4gFUzUW2lW3UFbsxO2m_2sfRW7x3O9RwpafQ98FnmHYSEKHh4Pt2uSnpwNqnfRAYCmgD636Wepii8tsHtwffn0jik",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/delete-task/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"delete-task",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/create-task",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2U5MWFkMmFhNTZjMjdmMzQ2MzFkMTljNTczYTBkODg0MjJiNDQ1MzI3NTM5ODIyNjg1OTJiY2ZkZTY3Mjk1NjNhNzAzMWRiYWZiNmZmNDciLCJpYXQiOjE2OTY5MDU4OTIuNzc3MzExLCJuYmYiOjE2OTY5MDU4OTIuNzc3MzEyLCJleHAiOjE3Mjg1MjgyOTIuNzczODE1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.kcbHwkhzFiONOUeRWFTsxIkzctvrEQUN-gt9vZZGRhSKP8JcYOIxnJ1v6artXvZM6lQ04powXfdvgnoVmY-Gg7GFDGeOcsMebQ-kR0ZVsp7J7oW2h12GvvVmN6xzE0uecZfGTTcS8VhhPAQdCMdnIv-F2zb-5VLxXurWEhFHKhxQ8MC-vHO1OepJ9_XwqslAsOJa-NFeTzTQjNyX_O_T-vTeDZpxXR_IMpeExDkqWKC5SKaXOEBFDZlejDd11yNoSwtgLuQcB7yMVQ83L7oXZvHKh9KW9frkAeeOY3-mUrWvsR0EaaZcRPFwpolHxAMw0rlPu2nl_-mV-6gBlhW0fgn_etNcEu4xpUVl7nRAWxr9Q4DO2ycBLS9B4b-n66UMNaNKCZnb9FLZiM82uz4dwtjZPHiUPQMwJZD-LBOoJctfTIC_NVfn_7SdVVYYnu5LITHwr34pqkRq_Rvx4W6xLY9GG2bxHM0lkE-br53M2anD2_JYvdKddyqr3mt9-eexDuiFxczhHsdXze8x6EOnuoPE0V3E3H9G3KHJTqJKNsY-E_GfxR52k4C9p4af4zvhI6tOzeUveA84HD7giM4gFUzUW2lW3UFbsxO2m_2sfRW7x3O9RwpafQ98FnmHYSEKHh4Pt2uSnpwNqnfRAYCmgD636Wepii8tsHtwffn0jik",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Sample Task 2\",\n    \"description\": \"This is a description for the sample task.\",\n    \"due_date\": \"2023-12-31\",\n    \"priority\": \"medium\",\n    \"status\": \"new\",\n    \"completed\": false,\n    \"notes\": \"Some additional notes about the task.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/create-task",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"create-task"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "{{base_url}}/api/update-task/1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiM2U5MWFkMmFhNTZjMjdmMzQ2MzFkMTljNTczYTBkODg0MjJiNDQ1MzI3NTM5ODIyNjg1OTJiY2ZkZTY3Mjk1NjNhNzAzMWRiYWZiNmZmNDciLCJpYXQiOjE2OTY5MDU4OTIuNzc3MzExLCJuYmYiOjE2OTY5MDU4OTIuNzc3MzEyLCJleHAiOjE3Mjg1MjgyOTIuNzczODE1LCJzdWIiOiIxIiwic2NvcGVzIjpbXX0.kcbHwkhzFiONOUeRWFTsxIkzctvrEQUN-gt9vZZGRhSKP8JcYOIxnJ1v6artXvZM6lQ04powXfdvgnoVmY-Gg7GFDGeOcsMebQ-kR0ZVsp7J7oW2h12GvvVmN6xzE0uecZfGTTcS8VhhPAQdCMdnIv-F2zb-5VLxXurWEhFHKhxQ8MC-vHO1OepJ9_XwqslAsOJa-NFeTzTQjNyX_O_T-vTeDZpxXR_IMpeExDkqWKC5SKaXOEBFDZlejDd11yNoSwtgLuQcB7yMVQ83L7oXZvHKh9KW9frkAeeOY3-mUrWvsR0EaaZcRPFwpolHxAMw0rlPu2nl_-mV-6gBlhW0fgn_etNcEu4xpUVl7nRAWxr9Q4DO2ycBLS9B4b-n66UMNaNKCZnb9FLZiM82uz4dwtjZPHiUPQMwJZD-LBOoJctfTIC_NVfn_7SdVVYYnu5LITHwr34pqkRq_Rvx4W6xLY9GG2bxHM0lkE-br53M2anD2_JYvdKddyqr3mt9-eexDuiFxczhHsdXze8x6EOnuoPE0V3E3H9G3KHJTqJKNsY-E_GfxR52k4C9p4af4zvhI6tOzeUveA84HD7giM4gFUzUW2lW3UFbsxO2m_2sfRW7x3O9RwpafQ98FnmHYSEKHh4Pt2uSnpwNqnfRAYCmgD636Wepii8tsHtwffn0jik",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Sample Task update\",\n    \"description\": \"This is a description for the sample task.\",\n    \"due_date\": \"2023-12-31\",\n    \"priority\": \"medium\",\n    \"status\": \"new\",\n    \"completed\": false,\n    \"notes\": \"Some additional notes about the task.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/update-task/3",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"update-task",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

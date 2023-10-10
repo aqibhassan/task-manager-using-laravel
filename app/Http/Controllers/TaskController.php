@@ -65,12 +65,12 @@ class TaskController extends Controller
         try {
             // Validate the request data
             $validatedData = $request->validate([
-                'title' => 'required|required|string|max:255',
+                'title' => 'required|string|max:255',
                 'description' => 'nullable|string',
                 'due_date' => 'sometimes|nullable|date|after:today',
-                'priority' => 'required|required|in:low,medium,high',
-                'status' => 'required|required|in:new,in_progress,on_hold,completed,review',
-                'completed' => 'required|required|boolean',
+                'priority' => 'sometimes|in:low,medium,high',
+                'status' => 'sometimes|in:new,in_progress,on_hold,completed,review',
+                'completed' => 'sometimes|boolean',
                 'notes' => 'nullable|string'
             ]);
 
