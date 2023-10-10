@@ -20,9 +20,12 @@ class TaskControllerTest extends TestCase
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'due_date' => now()->addDays(5)->format('Y-m-d'),
-            // ... other fields
+
         ];
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $user_token["token"], 'Accept' => 'application/json'])
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Accept' => 'application/json'
+        ])
             ->postJson('api/v1/create-task', $taskData);
 
         $response->assertStatus(201);
@@ -49,7 +52,10 @@ class TaskControllerTest extends TestCase
         $id = (string) $task->id;
         $path = (string) 'api/v1/get-task/' . $id;
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $user_token["token"], 'Accept' => 'application/json'])
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Accept' => 'application/json'
+        ])
             ->getJson($path);
 
         $response->assertStatus(200);
@@ -76,13 +82,19 @@ class TaskControllerTest extends TestCase
         $task = Task::factory()->create();
         $id = (string) $task->id;
         $path = (string) 'api/v1/update-task/' . $id;
-        // dd($path);
+
         $updateData = ['title' => 'Updated Title'];
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $user_token["token"], 'Accept' => 'application/json'])
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Accept' => 'application/json'
+        ])
             ->putJson($path, $updateData);
 
         $response->assertStatus(200);
-        $this->assertDatabaseHas('tasks', ['id' => $task->id, 'title' => 'Updated Title']);
+        $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
+            'title' => 'Updated Title'
+        ]);
         // Delete the last created task
         $lastTask = Task::orderBy('id', 'desc')->first();
         if ($lastTask) {
@@ -106,7 +118,10 @@ class TaskControllerTest extends TestCase
 
         $path = (string) 'api/v1/delete-task/' . $id;
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $user_token["token"], 'Accept' => 'application/json'])
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Accept' => 'application/json'
+        ])
             ->deleteJson($path);
 
         $response->assertStatus(204);
