@@ -14,7 +14,6 @@ class TaskControllerTest extends TestCase
 
     /**
      * Tests if a user can successfully create a task through the API endpoint.
-     * 
      * Procedure:
      * 1. Creates a new user using the User factory.
      * 2. Generates an authentication token for the created user.
@@ -57,7 +56,6 @@ class TaskControllerTest extends TestCase
 
     /**
      * Tests if a user can successfully fetch a specific task through the API endpoint.
-     * 
      * Procedure:
      * 1. Creates a new user using the User factory.
      * 2. Generates an authentication token for the created user.
@@ -101,7 +99,6 @@ class TaskControllerTest extends TestCase
     }
     /**
      * Tests if a user can successfully update a specific task through the API endpoint.
-     * 
      * Procedure:
      * 1. Creates a new user using the User factory.
      * 2. Generates an authentication token for the created user.
@@ -149,7 +146,6 @@ class TaskControllerTest extends TestCase
 
     /**
      * Tests if a user can successfully delete a specific task through the API endpoint.
-     * 
      * Procedure:
      * 1. Creates a new user using the User factory.
      * 2. Generates an authentication token for the created user.
