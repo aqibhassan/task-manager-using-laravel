@@ -1,6 +1,10 @@
 # Task Manager API using Laravel
 
 This project is a simple RESTful API for managing tasks, built with Laravel.
+
+# SonarCloud Status
+
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=aqibhassan_task-manager-using-laravel)](https://sonarcloud.io/summary/new_code?id=aqibhassan_task-manager-using-laravel)
 ## Table of Contents
 
 - [Installation](#installation)
