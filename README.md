@@ -2,16 +2,15 @@
 
 This project is a simple RESTful API for managing tasks, built with Laravel.
 
-# SonarCloud Status
+## SonarCloud Status
 
 [![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=aqibhassan_task-manager-using-laravel)](https://sonarcloud.io/summary/new_code?id=aqibhassan_task-manager-using-laravel)
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
 - [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
+
+
 
 ## Installation
 
@@ -55,7 +54,9 @@ This project is a simple RESTful API for managing tasks, built with Laravel.
     ```
 8. Testing:
     ```bash
-   ./vendor/bin/phpunit
+   ./vendor/bin/phpunit 
+   or
+   php artisan test
     ```
 ## Features
 
