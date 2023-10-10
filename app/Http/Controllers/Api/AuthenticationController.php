@@ -16,7 +16,7 @@ class AuthenticationController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store()
+    public function login_user()
     {
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
             // successfull authentication
