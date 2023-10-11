@@ -28,7 +28,6 @@ class TaskControllerTest extends TestCase
      * 4. Sends a POST request to the 'api/v1/create-task' endpoint using the generated token.
      * 5. Asserts that the API response status is 201 (indicating successful creation).
      * 6. Asserts that the task has been successfully added to the database.
-     * 7. Cleanup: Deletes the created task and user from the database.
      */
     public function test_user_can_create_task()
     {
@@ -47,17 +46,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(201);
         $this->assertDatabaseHas('tasks', ['title' => $taskData['title']]);
-        // Delete the last created task
-        $lastTask = Task::orderBy('id', 'desc')->first();
-        if ($lastTask) {
-            $lastTask->delete();
-        }
-
-        // Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
     /**
      * Tests if a user receives an error when trying to create a task with invalid data through the API endpoint.
@@ -68,7 +56,6 @@ class TaskControllerTest extends TestCase
      * 4. Sends a POST request to the 'api/v1/create-task' endpoint using the generated token.
      * 5. Asserts that the API response status is 422  (indicating data validation error).
      * 6. Asserts that the response contains validation error messages.
-     * 7. Cleanup: Deletes the created user from the database.
      */
     public function test_user_receives_error_when_creating_task_with_invalid_data()
     {
@@ -88,12 +75,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(422);  // 422 Unprocessable Entity
         $response->assertJsonValidationErrors(['title']);
-
-        // Cleanup: Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
     /**
      * Tests if a user receives an error when trying to create a task without an authentication token or with an invalid token.
@@ -101,7 +82,7 @@ class TaskControllerTest extends TestCase
      * 1. Prepares mock task data using Faker.
      * 2. Sends a POST request to the 'api/v1/create-task' endpoint without a token or with an invalid token.
      * 3. Asserts that the API response status is 401 (indicating unauthorized access).
-     * 4. Optionally, assert that the response contains an error message indicating unauthorized access.
+     * 4. Assert that the response contains an error message indicating unauthorized access.
      */
     public function test_user_receives_error_when_creating_task_without_token()
     {
@@ -116,7 +97,7 @@ class TaskControllerTest extends TestCase
         ])->postJson('api/v1/create-task', $taskData);  // Notice we're not providing the 'Authorization' header
 
         $response->assertStatus(401);
-        $response->assertJson(['error' => 'Unauthenticated or Invalid Token']);  // The exact error message might vary based on your setup
+        $response->assertJson(['error' => 'Unauthenticated or Invalid Token']);
     }
 
 
@@ -130,7 +111,6 @@ class TaskControllerTest extends TestCase
      * 5. Sends a GET request to the constructed endpoint using the generated token.
      * 6. Asserts that the API response status is 200 (indicating successful retrieval).
      * 7. Asserts that the response contains the correct task details.
-     * 8. Cleanup: Deletes the created task and user from the database.
      */
 
     public function test_user_can_fetch_specific_task()
@@ -148,15 +128,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJsonFragment(['title' => $task->title]);
-
-        // Delete the last created task
-        $task->delete();
-
-        // Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
     /**
      * Tests if a user receives an error when trying to fetch a non-existent task through the API endpoint.
@@ -167,7 +138,6 @@ class TaskControllerTest extends TestCase
      * 4. Sends a GET request to the constructed endpoint using the generated token.
      * 5. Asserts that the API response status is 404 (indicating the task was not found).
      * 6. Asserts that the response contains an error message indicating the task was not found.
-     * 7. Cleanup: Deletes the created user from the database.
      */
     public function test_user_receives_error_when_fetching_non_existent_task()
     {
@@ -184,12 +154,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Task not found']);
-
-        // Cleanup: Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
 
     /**
@@ -200,7 +164,6 @@ class TaskControllerTest extends TestCase
      * 3. Sends a GET request to the constructed endpoint without a token or with an invalid token.
      * 4. Asserts that the API response status is 401 (indicating unauthorized access).
      * 5. Optionally, assert that the response contains an error message indicating unauthorized access.
-     * 6. Cleanup: Deletes the created task from the database.
      */
     public function test_user_receives_error_when_fetching_task_without_token()
     {
@@ -214,10 +177,7 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(401);
         $response->assertJson(['error' => 'Unauthenticated or Invalid Token']);  // The exact error message might vary based on your setup
 
-        // Cleanup: Delete the created task
-        $task->delete();
     }
-
 
     /**
      * Tests if a user can successfully update a specific task through the API endpoint.
@@ -230,7 +190,6 @@ class TaskControllerTest extends TestCase
      * 6. Sends a PUT request to the constructed endpoint using the generated token and updated data.
      * 7. Asserts that the API response status is 200 (indicating successful update).
      * 8. Asserts that the task in the database has been updated with the new data.
-     * 9. Cleanup: Deletes the updated task and user from the database.
      */
     public function test_user_can_update_task()
     {
@@ -251,14 +210,6 @@ class TaskControllerTest extends TestCase
             'id' => $task->id,
             'title' => 'Updated Title'
         ]);
-        // Delete the last created task
-        $task->delete();
-
-        // Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
 
     /**
@@ -271,7 +222,6 @@ class TaskControllerTest extends TestCase
      * 5. Sends a PUT request to the constructed endpoint using the generated token and mock data.
      * 6. Asserts that the API response status is 404 (indicating the task was not found).
      * 7. Asserts that the response contains an error message indicating the task was not found.
-     * 8. Cleanup: Deletes the created user from the database.
      */
     public function test_user_receives_error_when_updating_non_existent_task()
     {
@@ -289,12 +239,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Task not found']);
-
-        // Cleanup: Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
     /**
      * Tests if a user receives an error when trying to update a task without an authentication token or with an invalid token.
@@ -304,8 +248,7 @@ class TaskControllerTest extends TestCase
      * 3. Prepares mock updated task data.
      * 4. Sends a PUT request to the constructed endpoint without a token or with an invalid token.
      * 5. Asserts that the API response status is 401 (indicating unauthorized access).
-     * 6. Optionally, assert that the response contains an error message indicating unauthorized access.
-     * 7. Cleanup: Deletes the created task from the database.
+     * 6. Assert that the response contains an error message indicating unauthorized access.
      */
     public function test_user_receives_error_when_updating_task_without_token()
     {
@@ -318,10 +261,7 @@ class TaskControllerTest extends TestCase
             'Accept' => 'application/json'
         ])->putJson($path, $updateData);
         $response->assertStatus(401);
-        $response->assertJson(['error' => 'Unauthenticated or Invalid Token']);  // The exact error message might vary based on your setup
-
-        // Cleanup: Delete the created task
-        $task->delete();
+        $response->assertJson(['error' => 'Unauthenticated or Invalid Token']);
     }
 
     /**
@@ -334,7 +274,6 @@ class TaskControllerTest extends TestCase
      * 5. Sends a DELETE request to the constructed endpoint using the generated token.
      * 6. Asserts that the API response status is 204 (indicating successful deletion).
      * 7. Asserts that the task has been successfully removed from the database.
-     * 8. Cleanup: Deletes the created user from the database.
      */
     public function test_user_can_delete_task()
     {
@@ -351,12 +290,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(204);
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
-
-        // Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
 
     /**
@@ -367,7 +300,6 @@ class TaskControllerTest extends TestCase
      * 3. Sends a DELETE request to the constructed endpoint without a token.
      * 4. Asserts that the API response status is 401 (indicating unauthorized access).
      * 5. Assert that the response contains an error message indicating unauthorized access.
-     * 6. Cleanup: Deletes the created task from the database.
      */
     public function test_user_receives_error_when_deleting_task_without_token()
     {
@@ -381,9 +313,6 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(401);
         $response->assertJson(['error' => 'Unauthenticated or Invalid Token']);
-
-        // Delete the last created task
-        $task->delete();
     }
     /**
      * Tests if a user receives an error when trying to delete a non-existent task through the API endpoint.
@@ -394,7 +323,6 @@ class TaskControllerTest extends TestCase
      * 4. Sends a DELETE request to the constructed endpoint using the generated token.
      * 5. Asserts that the API response status is 404 (indicating the task was not found).
      * 6. Asserts that the response contains an error message indicating the task was not found.
-     * 7. Cleanup: Deletes the created user from the database.
      */
     public function test_user_receives_error_when_deleting_non_existent_task()
     {
@@ -411,11 +339,5 @@ class TaskControllerTest extends TestCase
 
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Task not found']);
-
-        // Delete the last created user and revoking created token
-        if ($user->token()) {
-            $user->token()->revoke();
-        }
-        $user->delete();
     }
 }
