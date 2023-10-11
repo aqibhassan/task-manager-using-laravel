@@ -56,7 +56,7 @@ class TaskControllerTest extends TestCase
      * 2. Generates an authentication token for the created user.
      * 3. Prepares mock invalid task data (e.g., missing title).
      * 4. Sends a POST request to the 'api/v1/create-task' endpoint using the generated token.
-     * 5. Asserts that the API response status is 400  (indicating data validation error).
+     * 5. Asserts that the API response status is 422  (indicating data validation error).
      * 6. Asserts that the response contains validation error messages.
      * 7. Cleanup: Deletes the created user from the database.
      */
@@ -76,7 +76,7 @@ class TaskControllerTest extends TestCase
             'Accept' => 'application/json'
         ])->postJson('api/v1/create-task', $taskData);
 
-        $response->assertStatus(400);  // 400 Unprocessable Entity
+        $response->assertStatus(422);  // 422 Unprocessable Entity
         $response->assertJsonValidationErrors(['title']);
 
         // Cleanup: Delete the created user

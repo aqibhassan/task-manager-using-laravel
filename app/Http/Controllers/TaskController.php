@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
 {
@@ -30,22 +31,11 @@ class TaskController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      * If validation of the request data fails.
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
         try {
-            // Validate the request data
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'due_date' => 'required|date|after:today',
-                'priority' => 'sometimes|required|in:low,medium,high',
-                'status' => 'sometimes|required|in:new,in_progress,on_hold,completed,review',
-                'completed' => 'sometimes|required|boolean',
-                'notes' => 'nullable|string'
-            ]);
-
             // Create the task using the validated data
-            $task = Task::create($validatedData);
+            $task = Task::create($request->validated());
 
             return response()->json($task, 201);
         } catch (ValidationException $e) {
@@ -94,7 +84,7 @@ class TaskController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      * If validation of the request data fails.
      */
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, $id)
     {
         // Fetch the task by its ID
         $task = Task::find($id);
@@ -104,19 +94,8 @@ class TaskController extends Controller
         }
 
         try {
-            // Validate the request data
-            $validatedData = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'nullable|string',
-                'due_date' => 'sometimes|nullable|date|after:today',
-                'priority' => 'sometimes|in:low,medium,high',
-                'status' => 'sometimes|in:new,in_progress,on_hold,completed,review',
-                'completed' => 'sometimes|boolean',
-                'notes' => 'nullable|string'
-            ]);
-
             // Update the task using the validated data
-            $task->update($validatedData);
+            $task->update($request->validated());
 
             return response()->json($task, 200);
         } catch (ValidationException $e) {
