@@ -4,14 +4,21 @@ namespace Tests\Feature;
 
 use App\Models\Task;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TaskControllerTest extends TestCase
 {
-    use WithFaker;
 
+    use WithFaker, DatabaseTransactions;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->artisan('migrate', ['--database' => 'sqlite_testing']);
+        $this->artisan('passport:client', ['--personal' => true, '--name' => 'Test Personal Access Client']);
+    }
     /**
      * Tests if a user can successfully create a task through the API endpoint.
      * Procedure:
@@ -46,7 +53,10 @@ class TaskControllerTest extends TestCase
             $lastTask->delete();
         }
 
-        // Delete the last created user
+        // Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
     /**
@@ -79,7 +89,10 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(422);  // 422 Unprocessable Entity
         $response->assertJsonValidationErrors(['title']);
 
-        // Cleanup: Delete the created user
+        // Cleanup: Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
     /**
@@ -139,7 +152,10 @@ class TaskControllerTest extends TestCase
         // Delete the last created task
         $task->delete();
 
-        // Delete the last created user
+        // Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
     /**
@@ -169,7 +185,10 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Task not found']);
 
-        // Cleanup: Delete the created user
+        // Cleanup: Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
 
@@ -235,7 +254,10 @@ class TaskControllerTest extends TestCase
         // Delete the last created task
         $task->delete();
 
-        // Delete the last created user
+        // Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
 
@@ -268,7 +290,10 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Task not found']);
 
-        // Cleanup: Delete the created user
+        // Cleanup: Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
     /**
@@ -327,7 +352,10 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(204);
         $this->assertDatabaseMissing('tasks', ['id' => $task->id]);
 
-        // Delete the last created user
+        // Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
 
@@ -384,7 +412,10 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(404);
         $response->assertJson(['error' => 'Task not found']);
 
-        // Delete the last created user
+        // Delete the last created user and revoking created token
+        if ($user->token()) {
+            $user->token()->revoke();
+        }
         $user->delete();
     }
 }
