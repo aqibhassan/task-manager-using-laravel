@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Task;
-use Illuminate\Validation\ValidationException;
 use App\Http\Requests\TaskRequest;
 
 class TaskController extends Controller
@@ -33,15 +32,11 @@ class TaskController extends Controller
      */
     public function store(TaskRequest $request)
     {
-        try {
-            // Create the task using the validated data
-            $task = Task::create($request->validated());
 
-            return response()->json($task, 201);
-        } catch (ValidationException $e) {
-            // Return validation errors
-            return response()->json(['errors' => $e->validator->errors()], 400);
-        }
+        // Create the task using the validated data
+        $task = Task::create($request->validated());
+
+        return response()->json($task, 201);
     }
 
     /**
@@ -88,20 +83,13 @@ class TaskController extends Controller
     {
         // Fetch the task by its ID
         $task = Task::find($id);
-
         if (!$task) {
             return response()->json(['error' => 'Task not found'], 404);
         }
 
-        try {
-            // Update the task using the validated data
-            $task->update($request->validated());
-
-            return response()->json($task, 200);
-        } catch (ValidationException $e) {
-            // Return validation errors
-            return response()->json(['errors' => $e->validator->errors()], 400);
-        }
+        // Update the task using the validated data
+        $task->update($request->validated());
+        return response()->json($task, 200);
     }
 
     /**
