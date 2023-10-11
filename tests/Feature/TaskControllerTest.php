@@ -32,7 +32,7 @@ class TaskControllerTest extends TestCase
     public function test_user_can_create_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
         $taskData = [
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
@@ -40,7 +40,7 @@ class TaskControllerTest extends TestCase
 
         ];
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->postJson('api/v1/create-task', $taskData);
 
@@ -60,7 +60,7 @@ class TaskControllerTest extends TestCase
     public function test_user_receives_error_when_creating_task_with_invalid_data()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         // Intentionally missing the 'title' for the task to trigger a validation error
         $taskData = [
@@ -69,7 +69,7 @@ class TaskControllerTest extends TestCase
         ];
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->postJson('api/v1/create-task', $taskData);
 
@@ -116,13 +116,13 @@ class TaskControllerTest extends TestCase
     public function test_user_can_fetch_specific_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         $task = Task::factory()->create();
         $path = (string) 'api/v1/get-task/' . $task->id;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->getJson($path);
 
@@ -142,13 +142,13 @@ class TaskControllerTest extends TestCase
     public function test_user_receives_error_when_fetching_non_existent_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         $nonExistentTaskId = 123456;  // Assuming this ID doesn't exist in the database
         $path = (string) 'api/v1/get-task/' . $nonExistentTaskId;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->getJson($path);
 
@@ -194,14 +194,14 @@ class TaskControllerTest extends TestCase
     public function test_user_can_update_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         $task = Task::factory()->create();
         $path = (string) 'api/v1/update-task/' . $task->id;
 
         $updateData = ['title' => 'Updated Title'];
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->putJson($path, $updateData);
 
@@ -226,14 +226,14 @@ class TaskControllerTest extends TestCase
     public function test_user_receives_error_when_updating_non_existent_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         $nonExistentTaskId = 123456;  // Assuming this ID doesn't exist in the database
         $path = (string) 'api/v1/update-task/' . $nonExistentTaskId;
 
         $updateData = ['title' => 'Updated Title'];
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->putJson($path, $updateData);
 
@@ -278,13 +278,13 @@ class TaskControllerTest extends TestCase
     public function test_user_can_delete_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         $task = Task::factory()->create();
         $path = (string) 'api/v1/delete-task/' . $task->id;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->deleteJson($path);
 
@@ -327,13 +327,13 @@ class TaskControllerTest extends TestCase
     public function test_user_receives_error_when_deleting_non_existent_task()
     {
         $user = User::factory()->create();
-        $user_token['token'] = $user->createToken('appToken')->accessToken;
+        $token = $user->createToken('appToken')->accessToken;
 
         $nonExistentTaskId = 123456;  // Assuming this ID doesn't exist in the database
         $path = (string) 'api/v1/delete-task/' . $nonExistentTaskId;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $user_token["token"],
+            'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json'
         ])->deleteJson($path);
 
