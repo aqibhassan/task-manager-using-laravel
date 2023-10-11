@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Task;
-use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\TaskRequest;
 
